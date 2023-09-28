@@ -7,6 +7,7 @@ function LeftBox(props) {
   const [isOpen1, setIsOpen1] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [idmovie, setIdmovie] = useState("");
 
   const query = props.querydata;
   const KEY = "6502fbb3";
@@ -46,6 +47,15 @@ function LeftBox(props) {
         setError(error.message);
       });
   }, [props.querydata]);
+
+  useEffect(() => {
+    props.backIdmovie(idmovie);
+  }, [idmovie]);
+
+  const handleDetailMovie = (event) => {
+    setIdmovie(event.target.dataset.movie);
+  };
+
   return (
     <div className="box">
       <button className="btn-toggle" onClick={() => setIsOpen1((open) => !open)}>
@@ -55,7 +65,7 @@ function LeftBox(props) {
       {isOpen1 && loading && !error && (
         <ul className="list">
           {movies?.map((movie) => (
-            <li key={movie.imdbID}>
+            <li data-movie={movie.imdbID} className="SearchMoviesli" onClick={handleDetailMovie} key={movie.imdbID}>
               <img src={movie.Poster} alt={`${movie.Title} poster`} />
               <h3>{movie.Title}</h3>
               <div>

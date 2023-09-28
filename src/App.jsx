@@ -5,8 +5,12 @@ import RightBox from "./components/RightBox";
 export default function App() {
   const [query, setQuery] = useState("");
   const [lengthMovie, setLengthMovie] = useState("");
+  const [idmovie, setIdmovie] = useState("");
   const lengthMovies = (data) => {
     setLengthMovie(data);
+  };
+  const handleIdmovie = (id) => {
+    setIdmovie(id);
   };
   return (
     <>
@@ -22,8 +26,8 @@ export default function App() {
       </nav>
 
       <main className="main">
-        <LeftBox querydata={query ? query : "tarifnashode"} backsize={lengthMovies} />
-        <RightBox />
+        <LeftBox querydata={query ? query : "tarifnashode"} backsize={lengthMovies} backIdmovie={handleIdmovie} />
+        <RightBox id={idmovie} />
       </main>
     </>
   );
