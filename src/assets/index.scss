@@ -403,15 +403,40 @@ body {
     }
     > div {
       display: flex;
-      gap: 0.4rem;
       img {
-        width: 2rem;
-        &:hover {
-          filter: invert(64%) sepia(68%) saturate(1071%) hue-rotate(355deg) brightness(101%) contrast(103%);
-        }
+        width: 2.2rem;
+        padding: 0.3rem;
+      }
+    }
+    .numberStar {
+      display: flex;
+      align-items: center;
+      > p {
+        font-size: 2rem;
+        margin-left: 1rem;
+        width: 3rem;
+        color: rgb(255, 183, 0);
+      }
+      > div {
+        display: flex;
       }
     }
   }
+  .whatchlist {
+    border: none;
+    padding: 1.2rem 1.5rem;
+    border-radius: 1.8rem;
+    font-weight: bold;
+    background: linear-gradient(45deg, rgb(109, 255, 248), rgb(0, 158, 169));
+    margin-top: 2rem;
+    cursor: pointer;
+  }
+}
+
+.rateRightPage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .footerBox {
