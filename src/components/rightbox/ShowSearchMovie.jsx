@@ -84,7 +84,7 @@ function ShowSearchMovie(props) {
             <h1>{movieshow.Title}</h1>
             <div className="timeandsec">
               <p>{movieshow.Genre}</p>
-              <p>{movieshow.runtime}</p>
+              <p>{movieshow.Runtime}</p>
             </div>
             <p className="imdbRate">⭐️ {movieshow.imdbRating} IMDb rating</p>
             <p className="textDetailMovie">{movieshow.Plot}</p>

@@ -53,7 +53,12 @@ function LeftBox(props) {
   }, [idmovie]);
 
   const handleDetailMovie = (event) => {
-    setIdmovie(event.target.dataset.movie);
+    const asy = async () => {
+      setIdmovie("");
+    };
+    asy().then(() => {
+      setIdmovie(event.target.dataset.movie);
+    });
   };
 
   return (

@@ -10,7 +10,12 @@ export default function App() {
     setLengthMovie(data);
   };
   const handleIdmovie = (id) => {
-    setIdmovie(id);
+    const asy = async () => {
+      setIdmovie("");
+    };
+    asy().then(() => {
+      setIdmovie(id);
+    });
   };
   return (
     <>
