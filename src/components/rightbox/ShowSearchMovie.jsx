@@ -11,40 +11,49 @@ function ShowSearchMovie(props) {
   const [stars, setStars] = useState(null);
   const [renderStars, setRenderStars] = useState(null);
   const [movieshow, setMovieshow] = useState([]);
+  const [posterBack, setPosterBack] = useState([]);
   const [actors, setActors] = useState([]);
+
   const KEYtmdb =
     "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJkZDE3MTk4NDI4ZDkxZGZiYThlNWU1YTQ1OWU1Mjc1MiIsInN1YiI6IjY1MTkzMmYxYTE5OWE2MDBlMWZjN2JlYSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.qjZkw5ryAz3bt9Jf-TRCmW947WKGwgTAze3TrsfGDRU";
   // image actors
   useEffect(() => {
     if (movieshow.Actors == undefined) return;
-    const namesArray = movieshow.Actors.split(", ");
-    namesArray.forEach((actor) => {
-      const options = {
-        method: "GET",
-        url: "https://api.themoviedb.org/3/search/person",
-        params: { query: actor, language: "en-US", page: "1" },
-        headers: {
-          accept: "application/json",
-          Authorization: KEYtmdb,
-        },
-      };
+    const options = {
+      headers: {
+        accept: "application/json",
+        Authorization: KEYtmdb,
+      },
+    };
 
-      axios
-        .request(options)
-        .then(function (response) {
-          setActors((prevActor) => [...prevActor, ...response.data.results]);
-        })
-        .catch(function (error) {
-          console.error(error);
-        });
-    });
+    axios
+      .get(`https://api.themoviedb.org/3/find/${movieshow.imdbID}?external_source=imdb_id&append_to_response=credits`, options)
+      .then((response) => {
+        setPosterBack(response.data.movie_results[0]);
+        return response.data.movie_results[0].id;
+      })
+      .then((idmovie) => {
+        axios
+          .get(`https://api.themoviedb.org/3/movie/${idmovie}?&append_to_response=credits`, options)
+          .then((response) => {
+            setActors(response.data.credits.cast);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }, [movieshow]);
 
   useEffect(() => {
     setStars(-1);
     setRenderStars(0);
     setMovieshow([]);
+    setPosterBack([]);
     setActors([]);
+
     const sendId = props.id;
     if (sendId == "") return;
     axios
@@ -63,7 +72,7 @@ function ShowSearchMovie(props) {
     const options = {
       method: "GET",
       url: "https://api.themoviedb.org/3/search/person",
-      params: { query: idact, include_adult: "false", language: "en-US", page: "1" },
+      params: { query: idact, include_adult: "true", language: "en-US", page: "1" },
       headers: {
         accept: "application/json",
         Authorization:
@@ -128,11 +137,15 @@ function ShowSearchMovie(props) {
 
   return (
     <div className={styles.mainBox}>
-      {movieshow.Title == undefined ? (
+      {movieshow.Poster == undefined ? (
         <p className={styles.loader}>Loading...</p>
       ) : (
         <>
-          <img className={styles.posterBox} src={movieshow.Poster} alt="" />
+          <img
+            className={styles.posterBox}
+            src={posterBack == undefined ? movieshow.Poster : `https://image.tmdb.org/t/p/w500${posterBack.poster_path}`}
+            alt=""
+          />
           <div className={styles.shodowMainBox}></div>
           <img onClick={handleCloseDetailMovie} className={styles.arrowIcon} src={arrow} alt="arrow-icon" />
           <div className={styles.detailMovie}>
@@ -142,11 +155,13 @@ function ShowSearchMovie(props) {
               <p>{movieshow.Runtime}</p>
             </div>
             <p className={styles.imdbRate}>⭐️ {movieshow.imdbRating} IMDb rating</p>
-            <p>{movieshow.Actors}</p>
             <p className={styles.textDetailMovie}>{movieshow.Plot}</p>
             <div className={styles.rateRightPage}>
               <div className={styles.yourRate}>
-                <p>your rating :</p>
+                <div className={styles.subandpop}>
+                  <p>your rating :</p>
+                  {stars == -1 ? <></> : <button className={styles.whatchlist}>+ Add To Watched Movies</button>}
+                </div>
                 <div className={styles.numberStar}>
                   <div ref={refStars}>
                     <img
@@ -233,7 +248,6 @@ function ShowSearchMovie(props) {
                   {renderStars == 0 ? <p></p> : <p>{renderStars}</p>}
                 </div>
               </div>
-              {stars == -1 ? <></> : <button className={styles.whatchlist}>+ Add To Watched Movies</button>}
             </div>
             {/* image actors */}
             <div className={styles.imageActors}>
