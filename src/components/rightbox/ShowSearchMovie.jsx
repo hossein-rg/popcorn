@@ -56,6 +56,31 @@ function ShowSearchMovie(props) {
       });
   }, [props.id]);
 
+  // click actor
+  const handleClickActor = (element) => {
+    const idact = element.target.dataset.idactor;
+    const options = {
+      method: "GET",
+      url: "https://api.themoviedb.org/3/search/person",
+      params: { query: idact, include_adult: "false", language: "en-US", page: "1" },
+      headers: {
+        accept: "application/json",
+        Authorization:
+          "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJkZDE3MTk4NDI4ZDkxZGZiYThlNWU1YTQ1OWU1Mjc1MiIsInN1YiI6IjY1MTkzMmYxYTE5OWE2MDBlMWZjN2JlYSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.qjZkw5ryAz3bt9Jf-TRCmW947WKGwgTAze3TrsfGDRU",
+      },
+    };
+
+    axios
+      .request(options)
+      .then(function (response) {
+        console.log(response.data.results[0]);
+        // pass to detailActor
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
+  };
+
   const handleCloseDetailMovie = () => {
     props.backArrow(0);
   };
@@ -212,9 +237,16 @@ function ShowSearchMovie(props) {
             {/* image actors */}
             <div className="imageActors">
               {actors.map((ele, i) => {
-                console.log(ele);
                 if (ele.profile_path == null) return;
-                return <img key={i} src={`https://image.tmdb.org/t/p/w500${ele.profile_path}`} alt="" />;
+                return (
+                  <img
+                    onClick={handleClickActor}
+                    data-idactor={ele.name}
+                    key={i}
+                    src={`https://image.tmdb.org/t/p/w500${ele.profile_path}`}
+                    alt=""
+                  />
+                );
               })}
             </div>
           </div>
