@@ -20,9 +20,9 @@ function RightBox(props) {
         />
       )}
       <div className="footerBox">
-        <button>Group</button>
+        <button>Users</button>
         <button>My Movies</button>
-        <button>Setting</button>
+        <button>Genres</button>
       </div>
     </div>
   );
