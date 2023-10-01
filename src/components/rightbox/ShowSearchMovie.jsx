@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import starimg from "../../assets/star-solid.svg";
 import arrow from "../../assets/arrow-up.svg";
 import axios from "axios";
+import styles from "../../assets/styles/rightbox/Showsearchmovie.module.scss";
 
 function ShowSearchMovie(props) {
   const KEY = "6502fbb3";
@@ -74,7 +75,7 @@ function ShowSearchMovie(props) {
       .request(options)
       .then(function (response) {
         console.log(response.data.results[0]);
-        // pass to detailActor
+        // pass to other component
       })
       .catch(function (error) {
         console.error(error);
@@ -126,27 +127,27 @@ function ShowSearchMovie(props) {
   // -----end stars ----- //
 
   return (
-    <div className="mainBox">
+    <div className={styles.mainBox}>
       {movieshow.Title == undefined ? (
-        <p className="loader">Loading...</p>
+        <p className={styles.loader}>Loading...</p>
       ) : (
         <>
-          <img className="posterBox" src={movieshow.Poster} alt="" />
-          <div className="shodowMainBox"></div>
-          <img onClick={handleCloseDetailMovie} className="arrowIcon" src={arrow} alt="arrow-icon" />
-          <div className="detailMovie">
+          <img className={styles.posterBox} src={movieshow.Poster} alt="" />
+          <div className={styles.shodowMainBox}></div>
+          <img onClick={handleCloseDetailMovie} className={styles.arrowIcon} src={arrow} alt="arrow-icon" />
+          <div className={styles.detailMovie}>
             <h1>{movieshow.Title}</h1>
-            <div className="timeandsec">
+            <div className={styles.timeandsec}>
               <p>{movieshow.Genre}</p>
               <p>{movieshow.Runtime}</p>
             </div>
-            <p className="imdbRate">⭐️ {movieshow.imdbRating} IMDb rating</p>
+            <p className={styles.imdbRate}>⭐️ {movieshow.imdbRating} IMDb rating</p>
             <p>{movieshow.Actors}</p>
-            <p className="textDetailMovie">{movieshow.Plot}</p>
-            <div className="rateRightPage">
-              <div className="yourRate">
+            <p className={styles.textDetailMovie}>{movieshow.Plot}</p>
+            <div className={styles.rateRightPage}>
+              <div className={styles.yourRate}>
                 <p>your rating :</p>
-                <div className="numberStar">
+                <div className={styles.numberStar}>
                   <div ref={refStars}>
                     <img
                       onMouseEnter={handleStars}
@@ -232,10 +233,10 @@ function ShowSearchMovie(props) {
                   {renderStars == 0 ? <p></p> : <p>{renderStars}</p>}
                 </div>
               </div>
-              {stars == -1 ? <></> : <button className="whatchlist">+ Add To Watched Movies</button>}
+              {stars == -1 ? <></> : <button className={styles.whatchlist}>+ Add To Watched Movies</button>}
             </div>
             {/* image actors */}
-            <div className="imageActors">
+            <div className={styles.imageActors}>
               {actors.map((ele, i) => {
                 if (ele.profile_path == null) return;
                 return (

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import LeftBox from "./components/LeftBox";
 import RightBox from "./components/RightBox";
-
+import styles from "../src/assets/styles/App.module.scss";
 export default function App() {
   const [query, setQuery] = useState("");
   const [lengthMovie, setLengthMovie] = useState("");
@@ -19,18 +19,24 @@ export default function App() {
   };
   return (
     <>
-      <nav className="nav-bar">
-        <div className="logo">
+      <nav className={styles.navbar}>
+        <div className={styles.logo}>
           <span role="img">🍿</span>
           <h1>usePopcorn</h1>
         </div>
-        <input className="search" type="text" placeholder="Search movies..." value={query} onChange={(e) => setQuery(e.target.value)} />
-        <p className="num-results">
+        <input
+          className={styles.search}
+          type="text"
+          placeholder="Search movies..."
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+        />
+        <p className={styles.numresults}>
           Found <strong>{lengthMovie ? lengthMovie : 0}</strong> results
         </p>
       </nav>
 
-      <main className="main">
+      <main className={styles.main}>
         <LeftBox querydata={query ? query : "tarifnashode"} backsize={lengthMovies} backIdmovie={handleIdmovie} />
         <RightBox id={idmovie} />
       </main>

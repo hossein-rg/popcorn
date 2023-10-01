@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
 import axios from "axios";
-
+import styles from "../../src/assets/styles/Leftbox.module.scss";
 function LeftBox(props) {
   const [movies, setMovies] = useState([]);
   const [isOpen1, setIsOpen1] = useState(true);
@@ -62,15 +62,15 @@ function LeftBox(props) {
   };
 
   return (
-    <div className="box">
-      <button className="btn-toggle" onClick={() => setIsOpen1((open) => !open)}>
+    <div className={styles.box}>
+      <button className={styles.btntoggle} onClick={() => setIsOpen1((open) => !open)}>
         {isOpen1 ? "–" : "+"}
       </button>
-      {isOpen1 && !loading && !error && <p className="loader">Loading ...</p>}
+      {isOpen1 && !loading && !error && <p className={styles.loader}>Loading ...</p>}
       {isOpen1 && loading && !error && (
-        <ul className="list">
+        <ul className={styles.list}>
           {movies?.map((movie) => (
-            <li data-movie={movie.imdbID} className="SearchMoviesli" onClick={handleDetailMovie} key={movie.imdbID}>
+            <li data-movie={movie.imdbID} className={styles.SearchMoviesli} onClick={handleDetailMovie} key={movie.imdbID}>
               <img src={movie.Poster} alt={`${movie.Title} poster`} />
               <h3>{movie.Title}</h3>
               <div>
@@ -83,7 +83,7 @@ function LeftBox(props) {
           ))}
         </ul>
       )}
-      {isOpen1 && error && <p className="error">{error}</p>}
+      {isOpen1 && error && <p className={styles.error}>{error}</p>}
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import styles from "../../assets/styles/rightbox/Mymovies.module.scss";
 function MyMovies() {
   const tempWatchedData = [
     {
@@ -59,7 +60,7 @@ function MyMovies() {
     <div>
       {
         <>
-          <div className="summary">
+          <div className={styles.summary}>
             <h2>Movies you watched</h2>
             <div>
               <p>
@@ -81,7 +82,7 @@ function MyMovies() {
             </div>
           </div>
 
-          <ul className="list">
+          <ul className={styles.list}>
             {watched.map((movie) => (
               <li key={movie.imdbID}>
                 <img src={movie.Poster} alt={`${movie.Title} poster`} />
@@ -165,5 +166,28 @@ export default MyMovies;
 //     console.log(response.data);
 //   })
 //   .catch((error) => {
+//     console.error(error);
+//   });
+
+// search person with name
+// const idact = element.target.dataset.idactor;
+// const options = {
+//   method: "GET",
+//   url: "https://api.themoviedb.org/3/search/person",
+//   params: { query: idact, include_adult: "false", language: "en-US", page: "1" },
+//   headers: {
+//     accept: "application/json",
+//     Authorization:
+//       "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJkZDE3MTk4NDI4ZDkxZGZiYThlNWU1YTQ1OWU1Mjc1MiIsInN1YiI6IjY1MTkzMmYxYTE5OWE2MDBlMWZjN2JlYSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.qjZkw5ryAz3bt9Jf-TRCmW947WKGwgTAze3TrsfGDRU",
+//   },
+// };
+
+// axios
+//   .request(options)
+//   .then(function (response) {
+//     console.log(response.data.results[0]);
+//     // pass to detailActor
+//   })
+//   .catch(function (error) {
 //     console.error(error);
 //   });
