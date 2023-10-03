@@ -20,7 +20,6 @@ function ShowActorDetail({ actorId }) {
     axios
       .request(options)
       .then(function (response) {
-        console.log(response.data);
         setDeepActor(response.data);
       })
       .catch(function (error) {
@@ -61,7 +60,6 @@ function ShowActorDetail({ actorId }) {
           </div>
           <div className={styles.actorBox}>
             <div className={styles.actorDet}>
-              {console.log(actor)}
               <img src={`https://image.tmdb.org/t/p/w500${actor.profile_path}`} alt="" />
               <div className={styles.actorNameBorn}>
                 <p>{actor.name}</p>
@@ -76,18 +74,14 @@ function ShowActorDetail({ actorId }) {
             <div className={styles.knownby}>
               <h2>Known by</h2>
               <div className={styles.knownmovies}>
-                <div>
-                  <img src={`https://image.tmdb1.org/t/p/w500${actor.profile_path}`} alt="known1" />
-                  <p>movie1</p>
-                </div>
-                <div>
-                  <img src={`https://image.tmdb1.org/t/p/w500${actor.profile_path}`} alt="known1" />
-                  <p>movie2</p>
-                </div>
-                <div>
-                  <img src={`https://image.tmdb1.org/t/p/w500${actor.profile_path}`} alt="known1" />
-                  <p>movie3</p>
-                </div>
+                {actor.known_for.map((ele, key) => {
+                  return (
+                    <div key={key}>
+                      <img src={`https://image.tmdb.org/t/p/w500${ele.poster_path}`} alt={ele.id} />
+                      <p>{ele.title == undefined ? ele.original_name : ele.title}</p>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </div>

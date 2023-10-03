@@ -25,27 +25,25 @@ function MyMovies() {
     },
   ];
 
-  useEffect(() => {
-    const options = {
-      method: "GET",
-      url: "https://api.themoviedb.org/3/movie/346698/credits",
-      params: { language: "en-US" },
-      headers: {
-        accept: "application/json",
-        Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJkZDE3MTk4NDI4ZDkxZGZiYThlNWU1YTQ1OWU1Mjc1MiIsInN1YiI6IjY1MTkzMmYxYTE5OWE2MDBlMWZjN2JlYSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.qjZkw5ryAz3bt9Jf-TRCmW947WKGwgTAze3TrsfGDRU",
-      },
-    };
+  // useEffect(() => {
+  //   const options = {
+  //     method: "GET",
+  //     url: "https://api.themoviedb.org/3/movie/346698/credits",
+  //     params: { language: "en-US" },
+  //     headers: {
+  //       accept: "application/json",
+  //       Authorization:
+  //         "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJkZDE3MTk4NDI4ZDkxZGZiYThlNWU1YTQ1OWU1Mjc1MiIsInN1YiI6IjY1MTkzMmYxYTE5OWE2MDBlMWZjN2JlYSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.qjZkw5ryAz3bt9Jf-TRCmW947WKGwgTAze3TrsfGDRU",
+  //     },
+  //   };
 
-    axios
-      .request(options)
-      .then(function (response) {
-        console.log(response.data);
-      })
-      .catch(function (error) {
-        console.error(error);
-      });
-  }, []);
+  //   axios
+  //     .request(options)
+  //     .then(function (response) {})
+  //     .catch(function (error) {
+  //       console.error(error);
+  //     });
+  // }, []);
 
   const [watched, setWatched] = useState(tempWatchedData);
 
