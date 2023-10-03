@@ -29,12 +29,17 @@ function ShowSearchMovie(props) {
     axios
       .get(`https://api.themoviedb.org/3/find/${movieshow.imdbID}?external_source=imdb_id&append_to_response=credits`, options)
       .then((response) => {
-        setPosterBack(response.data.movie_results[0]);
-        return response.data.movie_results[0].id;
+        if (response.data.movie_results[0] != undefined) {
+          setPosterBack(response.data.movie_results[0]);
+          return ["movie", response.data.movie_results[0].id];
+        } else if (response.data.tv_results[0] != undefined) {
+          setPosterBack(response.data.tv_results[0]);
+          return ["tv", response.data.tv_results[0].id];
+        }
       })
-      .then((idmovie) => {
+      .then((data) => {
         axios
-          .get(`https://api.themoviedb.org/3/movie/${idmovie}?&append_to_response=credits`, options)
+          .get(`https://api.themoviedb.org/3/${data[0]}/${data[1]}?&append_to_response=credits`, options)
           .then((response) => {
             setActors(response.data.credits.cast);
           })
@@ -69,26 +74,7 @@ function ShowSearchMovie(props) {
   // click actor
   const handleClickActor = (element) => {
     const idact = element.target.dataset.idactor;
-    const options = {
-      method: "GET",
-      url: "https://api.themoviedb.org/3/search/person",
-      params: { query: idact, include_adult: "true", language: "en-US", page: "1" },
-      headers: {
-        accept: "application/json",
-        Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJkZDE3MTk4NDI4ZDkxZGZiYThlNWU1YTQ1OWU1Mjc1MiIsInN1YiI6IjY1MTkzMmYxYTE5OWE2MDBlMWZjN2JlYSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.qjZkw5ryAz3bt9Jf-TRCmW947WKGwgTAze3TrsfGDRU",
-      },
-    };
-
-    axios
-      .request(options)
-      .then(function (response) {
-        console.log(response.data.results[0]);
-        // pass to other component
-      })
-      .catch(function (error) {
-        console.error(error);
-      });
+    props.backActorId(idact);
   };
 
   const handleCloseDetailMovie = () => {
